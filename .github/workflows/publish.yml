@@ -1,7 +1,14 @@
 name: Publish to npm
 
-# Runs when you click "Create release" on the GitHub Releases page.
-# Requires one repository secret: NPM_TOKEN (an npm "Automation" token).
+# Runs when you click "Publish release" on the GitHub Releases page.
+#
+# Phase 1 (first publish): needs one repository secret, NPM_TOKEN
+#   (an npm "Automation" token — it bypasses 2FA, which is what CI needs).
+# Phase 2 (after the package exists): configure a Trusted Publisher on
+#   npmjs.com → the package → Settings → Trusted publishing, pointing at
+#   youbotapi/youbot-image-mcp and publish.yml. Then delete NPM_TOKEN here
+#   and revoke it on npm — OIDC below takes over and provenance becomes
+#   automatic.
 on:
   release:
     types: [published]
@@ -12,19 +19,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # lets npm attach a provenance attestation
+      id-token: write # required for OIDC and for provenance attestation
     steps:
       - uses: actions/checkout@v4
 
+      # Node 24 ships npm 11, which is what OIDC publishing needs in phase 2.
+      # No dependency cache here on purpose: a release build should resolve clean.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
       - run: npm ci
       - run: npm run build
       - run: npm test
 
+      # NODE_AUTH_TOKEN is ignored once a Trusted Publisher is configured,
+      # so this same step keeps working after the phase 2 switch.
       - run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
