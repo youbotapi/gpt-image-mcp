@@ -2,7 +2,7 @@
 
 **Generate and edit images with GPT Image 2.5 — OpenAI's most capable image model — directly inside Claude, Cursor, or any MCP client. $0.029 per image.**
 
-[![npm](https://img.shields.io/npm/v/youbot-image-mcp)](https://www.npmjs.com/package/youbot-image-mcp)
+[![npm](https://img.shields.io/npm/v/gpt-image-2-5-mcp)](https://www.npmjs.com/package/gpt-image-2-5-mcp)
 [![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 Ask Claude for a picture and get one back in the chat:
@@ -48,7 +48,7 @@ Edit `claude_desktop_config.json`
   "mcpServers": {
     "gpt-image": {
       "command": "npx",
-      "args": ["-y", "youbot-image-mcp"],
+      "args": ["-y", "gpt-image-2-5-mcp"],
       "env": {
         "YOUBOT_API_KEY": "sk-live-your-key-from-you.bot"
       }
@@ -64,7 +64,7 @@ Restart Claude Desktop.
 <summary><b>Claude Code</b></summary>
 
 ```bash
-claude mcp add gpt-image -e YOUBOT_API_KEY=sk-live-your-key -- npx -y youbot-image-mcp
+claude mcp add gpt-image -e YOUBOT_API_KEY=sk-live-your-key -- npx -y gpt-image-2-5-mcp
 ```
 </details>
 
@@ -78,7 +78,7 @@ In `~/.cursor/mcp.json` (or Settings → MCP → Add new server):
   "mcpServers": {
     "gpt-image": {
       "command": "npx",
-      "args": ["-y", "youbot-image-mcp"],
+      "args": ["-y", "gpt-image-2-5-mcp"],
       "env": { "YOUBOT_API_KEY": "sk-live-your-key-from-you.bot" }
     }
   }
@@ -89,7 +89,7 @@ In `~/.cursor/mcp.json` (or Settings → MCP → Add new server):
 <details>
 <summary><b>Any other MCP client</b></summary>
 
-Run `npx -y youbot-image-mcp` over stdio with `YOUBOT_API_KEY` in the environment.
+Run `npx -y gpt-image-2-5-mcp` over stdio with `YOUBOT_API_KEY` in the environment.
 </details>
 
 ### 3. Check it works

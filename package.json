@@ -1,10 +1,10 @@
 {
-  "name": "youbot-image-mcp",
-  "version": "0.1.2",
+  "name": "gpt-image-2-5-mcp",
+  "version": "0.2.0",
   "description": "MCP server for GPT Image 2.5 — generate and edit images inside Claude, Cursor or any MCP client for $0.029 per image. Requires a free you.bot API key (not an OpenAI key).",
   "type": "module",
   "bin": {
-    "youbot-image-mcp": "dist/index.js"
+    "gpt-image-2-5-mcp": "dist/index.js"
   },
   "main": "dist/index.js",
   "files": [
