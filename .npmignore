@@ -1,0 +1,7 @@
+src/
+test/
+.github/
+tsconfig.json
+node_modules/
+*.log
+.env

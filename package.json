@@ -1,0 +1,59 @@
+{
+  "name": "youbot-image-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for GPT Image 2.5 — generate and edit images inside Claude, Cursor or any MCP client for $0.029 per image. Requires a free you.bot API key (not an OpenAI key).",
+  "type": "module",
+  "bin": {
+    "youbot-image-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "node --test test/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "gpt-image",
+    "gpt-image-2-5",
+    "image-generation",
+    "text-to-image",
+    "image-to-image",
+    "image-editing",
+    "ai-image",
+    "claude",
+    "claude-desktop",
+    "claude-code",
+    "cursor",
+    "openai",
+    "youbot"
+  ],
+  "author": "you.bot <contact@you.bot>",
+  "license": "MIT",
+  "homepage": "https://you.bot/models/gpt-image-2-5-sunburst-text-to-image",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youbotapi/youbot-image-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/youbotapi/youbot-image-mcp/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.4.0"
+  }
+}
