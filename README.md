@@ -9,7 +9,7 @@ Ask Claude for a picture and get one back in the chat:
 
 > *"A friendly robot painting a picture at an easel in a sunlit studio, warm morning light through a tall window, soft shadows, detailed illustration style, a small wooden sign on the easel reading 'GPT IMAGE 2.5'"*
 
-![Example output from GPT Image 2.5](https://raw.githubusercontent.com/youbotapi/youbot-image-mcp/main/docs/example.png)
+![Example output from GPT Image 2.5](https://raw.githubusercontent.com/youbotapi/gpt-image-mcp/main/docs/example.png)
 
 *Generated with this server in 45 seconds for $0.029. Note that the text on the sign came out exactly as asked — GPT Image 2.5 is unusually good at rendering words inside an image.*
 
