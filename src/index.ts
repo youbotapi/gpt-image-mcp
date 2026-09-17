@@ -15,6 +15,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { mkdir, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { join, resolve } from "node:path";
 
 import {
@@ -33,7 +34,9 @@ import {
   type AspectRatio,
 } from "./youbot.js";
 
-const VERSION = "0.1.0";
+// Read from package.json rather than repeating the number here — two copies
+// drift the moment one of them is bumped and the other is forgotten.
+const VERSION: string = createRequire(import.meta.url)("../package.json").version;
 
 /** Images larger than this are linked rather than inlined, to protect the context window. */
 const MAX_INLINE_BYTES = 5 * 1024 * 1024;
