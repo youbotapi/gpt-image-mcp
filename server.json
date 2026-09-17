@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.youbotapi/gpt-image-mcp",
+  "description": "Generate and edit images with GPT Image 2.5 for $0.029 — free key, 50 credits, no card.",
+  "repository": {
+    "url": "https://github.com/youbotapi/gpt-image-mcp",
+    "source": "github"
+  },
+  "version": "0.2.0",
+  "websiteUrl": "https://you.bot",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "gpt-image-2-5-mcp",
+      "version": "0.2.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "YOUBOT_API_KEY",
+          "description": "API key from you.bot — NOT an OpenAI key. Free at https://you.bot, 50 credits (~17 images) on signup, no credit card. Keys start with sk-live-.",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "YOUBOT_IMAGE_DIR",
+          "description": "Optional. If set, every generated image is also saved to this folder.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
