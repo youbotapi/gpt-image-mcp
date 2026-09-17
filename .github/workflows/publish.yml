@@ -6,7 +6,7 @@ name: Publish to npm
 #   (an npm "Automation" token — it bypasses 2FA, which is what CI needs).
 # Phase 2 (after the package exists): configure a Trusted Publisher on
 #   npmjs.com → the package → Settings → Trusted publishing, pointing at
-#   youbotapi/youbot-image-mcp and publish.yml. Then delete NPM_TOKEN here
+#   youbotapi/gpt-image-mcp and publish.yml. Then delete NPM_TOKEN here
 #   and revoke it on npm — OIDC below takes over and provenance becomes
 #   automatic.
 on:
@@ -39,3 +39,25 @@ jobs:
       - run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # The Official MCP Registry is the upstream that other directories and
+      # MCP clients read from, so listing there is what actually gets the
+      # server discovered. Authentication is OIDC from this workflow — no
+      # token, nothing to rotate.
+      - name: Publish to the Official MCP Registry
+        run: |
+          # Keep server.json's versions in step with package.json rather than
+          # trusting two files to be edited together.
+          node -e '
+            const fs = require("fs");
+            const version = require("./package.json").version;
+            const server = JSON.parse(fs.readFileSync("server.json", "utf8"));
+            server.version = version;
+            for (const p of server.packages) p.version = version;
+            fs.writeFileSync("server.json", JSON.stringify(server, null, 2) + "\n");
+            console.log("server.json set to", version);
+          '
+          curl -sL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          chmod +x mcp-publisher
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish
