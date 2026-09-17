@@ -243,7 +243,7 @@ export class YouBotImageClient {
     return {
       Authorization: `Bearer ${this.apiKey}`,
       "Content-Type": "application/json",
-      "User-Agent": "youbot-image-mcp",
+      "User-Agent": "gpt-image-2-5-mcp",
     };
   }
 

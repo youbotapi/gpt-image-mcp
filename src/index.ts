@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * youbot-image-mcp — GPT Image 2.5 for any MCP client.
+ * gpt-image-2-5-mcp — GPT Image 2.5 for any MCP client.
  *
  * Every user-visible string in this file is written on the assumption that the
  * reader's first guess will be "I need an OpenAI key". They do not.
@@ -217,7 +217,7 @@ async function runGeneration(
 }
 
 const server = new Server(
-  { name: "youbot-image-mcp", version: VERSION },
+  { name: "gpt-image-2-5-mcp", version: VERSION },
   { capabilities: { tools: {}, prompts: {} }, instructions: INSTRUCTIONS },
 );
 
@@ -329,7 +329,7 @@ async function main() {
   await server.connect(new StdioServerTransport());
   // stdout is the JSON-RPC channel, so anything human-readable goes to stderr.
   console.error(
-    `youbot-image-mcp ${VERSION} ready — GPT Image 2.5 at ${usd(CREDITS_PER_IMAGE)}/image. ` +
+    `gpt-image-2-5-mcp ${VERSION} ready — GPT Image 2.5 at ${usd(CREDITS_PER_IMAGE)}/image. ` +
       `Key source: you.bot (not OpenAI).`,
   );
 }
