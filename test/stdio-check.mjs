@@ -6,6 +6,9 @@
  */
 import { spawn } from "node:child_process";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+const PKG = JSON.parse(readFileSync(new URL("../package.json", import.meta.url)));
 
 function session(env) {
   const child = spawn(process.execPath, ["dist/index.js"], {
@@ -72,6 +75,10 @@ const init = await handshake(noKey);
 const instructions = init.result.instructions ?? "";
 
 check("initialize returns server instructions", () => assert.ok(instructions.length > 100));
+check("the version the server reports matches package.json", () =>
+  assert.equal(init.result.serverInfo.version, PKG.version));
+check("the server name matches the package name", () =>
+  assert.equal(init.result.serverInfo.name, PKG.name));
 check("instructions say the key is NOT an OpenAI key", () =>
   assert.match(instructions, /NOT an OpenAI API key/));
 check("instructions give the you.bot signup URL", () =>
