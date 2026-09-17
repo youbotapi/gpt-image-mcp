@@ -34,9 +34,19 @@ jobs:
       - run: npm run build
       - run: npm test
 
-      # NODE_AUTH_TOKEN is ignored once a Trusted Publisher is configured,
-      # so this same step keeps working after the phase 2 switch.
-      - run: npm publish --access public --provenance
+      # Skip rather than fail when this version is already on npm, so the whole
+      # workflow can be re-run safely — which matters because the registry step
+      # below is the part most likely to need a retry.
+      # NODE_AUTH_TOKEN is ignored once a Trusted Publisher is configured.
+      - name: Publish to npm if this version is new
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "$NAME@$VERSION is already on npm — skipping publish"
+          else
+            npm publish --access public --provenance
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -57,6 +67,20 @@ jobs:
             fs.writeFileSync("server.json", JSON.stringify(server, null, 2) + "\n");
             console.log("server.json set to", version);
           '
+          # The registry verifies the version really exists on npm before it
+          # will register it. npm's CDN lags a publish by 1-4 minutes, so wait
+          # for the version to actually resolve instead of racing it.
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          for i in $(seq 1 24); do
+            if curl -fsS "https://registry.npmjs.org/$NAME/$VERSION" > /dev/null; then
+              echo "npm is serving $NAME@$VERSION"
+              break
+            fi
+            echo "waiting for npm to serve $NAME@$VERSION ($i/24)"
+            sleep 15
+          done
+
           curl -sL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
           chmod +x mcp-publisher
           ./mcp-publisher login github-oidc
