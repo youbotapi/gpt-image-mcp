@@ -1,6 +1,6 @@
 {
   "name": "gpt-image-2-5-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "mcpName": "io.github.youbotapi/gpt-image-mcp",
   "description": "MCP server for GPT Image 2.5 — generate and edit images inside Claude, Cursor or any MCP client for $0.029 per image. Requires a free you.bot API key (not an OpenAI key).",
   "type": "module",
@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "node --test test/*.test.js",
+    "test": "node --test test/*.test.js && node test/stdio-check.mjs",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
